@@ -1,0 +1,189 @@
+{% extends 'inner_base.html' %}
+
+{% block title %}
+{% if department %}
+Edit Department
+{% else %}
+Add Department
+{% endif %}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .form-container {
+        max-width: 700px;
+        margin: auto;
+    }
+
+    .page-title {
+        margin-bottom: 25px;
+    }
+
+    .page-title h1 {
+        font-size: 30px;
+        color: #1f2937;
+    }
+
+    .page-title p {
+        color: #6b7280;
+        margin-top: 6px;
+    }
+
+    .form-card {
+        background: white;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-group label {
+        display: block;
+        font-weight: bold;
+        margin-bottom: 8px;
+        color: #374151;
+    }
+
+    .form-group input,
+    .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 7px;
+        font-size: 15px;
+        font-family: Arial, sans-serif;
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #2563eb;
+    }
+
+    .error {
+        color: #dc2626;
+        font-size: 13px;
+        margin-top: 5px;
+    }
+
+    .buttons {
+        display: flex;
+        gap: 10px;
+        margin-top: 25px;
+    }
+
+    .btn {
+        padding: 12px 22px;
+        border-radius: 7px;
+        text-decoration: none;
+        border: none;
+        cursor: pointer;
+        font-size: 14px;
+    }
+
+    .save {
+        background: #2563eb;
+        color: white;
+    }
+
+    .save:hover {
+        background: #1d4ed8;
+    }
+
+    .cancel {
+        background: #e5e7eb;
+        color: #374151;
+    }
+
+</style>
+
+
+<div class="form-container">
+
+    <div class="page-title">
+
+        <h1>
+            {% if department %}
+                ✏️ Edit Department
+            {% else %}
+                ➕ Add Department
+            {% endif %}
+        </h1>
+
+        <p>
+            {% if department %}
+                Update department information
+            {% else %}
+                Create a new department
+            {% endif %}
+        </p>
+
+    </div>
+
+
+    <div class="form-card">
+
+        <form method="POST">
+
+            {% csrf_token %}
+
+
+            {% for field in form %}
+
+            <div class="form-group">
+
+                {{ field.label_tag }}
+
+                {{ field }}
+
+                {% for error in field.errors %}
+
+                    <div class="error">
+                        {{ error }}
+                    </div>
+
+                {% endfor %}
+
+            </div>
+
+            {% endfor %}
+
+
+            <div class="buttons">
+
+                <button
+                    type="submit"
+                    class="btn save">
+
+                    💾
+                    {% if department %}
+                        Update Department
+                    {% else %}
+                        Save Department
+                    {% endif %}
+
+                </button>
+
+
+                <a
+                    href="{% url 'department_list' %}"
+                    class="btn cancel">
+
+                    Cancel
+
+                </a>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+{% endblock %}

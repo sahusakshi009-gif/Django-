@@ -1,0 +1,791 @@
+```html
+{% extends 'inner_base.html' %}
+
+{% block title %}
+Employees
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+
+    /* ===============================
+       EMPLOYEE PAGE
+    =============================== */
+
+    .employee-page {
+        width: 100%;
+    }
+
+
+    /* ===============================
+       PAGE HEADER
+    =============================== */
+
+    .employee-header {
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+
+        margin-bottom: 25px;
+
+        background: white;
+
+        padding: 24px 28px;
+
+        border-radius: 18px;
+
+        border: 1px solid #e2e8f0;
+
+        box-shadow:
+            0 5px 18px
+            rgba(15, 23, 42, 0.05);
+    }
+
+
+    .header-title {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 15px;
+    }
+
+
+    .page-icon {
+
+        width: 55px;
+
+        height: 55px;
+
+        border-radius: 15px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #2563eb,
+                #4f46e5
+            );
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 28px;
+
+        box-shadow:
+            0 7px 18px
+            rgba(37, 99, 235, 0.20);
+    }
+
+
+    .header-title h1 {
+
+        margin: 0;
+
+        color: #0f172a;
+
+        font-size: 25px;
+    }
+
+
+    .header-title p {
+
+        margin-top: 5px;
+
+        color: #64748b;
+
+        font-size: 13px;
+    }
+
+
+    /* ===============================
+       ADD BUTTON
+    =============================== */
+
+    .add-btn {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 8px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #2563eb,
+                #4f46e5
+            );
+
+        color: white;
+
+        padding: 12px 18px;
+
+        text-decoration: none;
+
+        border-radius: 10px;
+
+        font-size: 14px;
+
+        font-weight: 600;
+
+        box-shadow:
+            0 6px 15px
+            rgba(37, 99, 235, 0.20);
+
+        transition: 0.25s;
+    }
+
+
+    .add-btn:hover {
+
+        transform: translateY(-2px);
+
+        box-shadow:
+            0 10px 20px
+            rgba(37, 99, 235, 0.30);
+    }
+
+
+    /* ===============================
+       TABLE CONTAINER
+    =============================== */
+
+    .table-card {
+
+        background: white;
+
+        border-radius: 18px;
+
+        border: 1px solid #e2e8f0;
+
+        overflow: hidden;
+
+        box-shadow:
+            0 5px 18px
+            rgba(15, 23, 42, 0.05);
+    }
+
+
+    .table-top {
+
+        padding: 18px 22px;
+
+        border-bottom:
+            1px solid #e2e8f0;
+
+        display: flex;
+
+        justify-content: space-between;
+
+        align-items: center;
+    }
+
+
+    .table-top h2 {
+
+        font-size: 17px;
+
+        color: #0f172a;
+    }
+
+
+    .employee-count {
+
+        background: #eff6ff;
+
+        color: #2563eb;
+
+        padding: 7px 12px;
+
+        border-radius: 20px;
+
+        font-size: 12px;
+
+        font-weight: 600;
+    }
+
+
+    /* ===============================
+       TABLE
+    =============================== */
+
+    .table-wrapper {
+
+        width: 100%;
+
+        overflow-x: auto;
+    }
+
+
+    table {
+
+        width: 100%;
+
+        border-collapse: collapse;
+
+        min-width: 850px;
+    }
+
+
+    th {
+
+        background: #f8fafc;
+
+        color: #475569;
+
+        padding: 15px 16px;
+
+        text-align: left;
+
+        font-size: 12px;
+
+        text-transform: uppercase;
+
+        letter-spacing: 0.4px;
+
+        border-bottom:
+            1px solid #e2e8f0;
+    }
+
+
+    td {
+
+        padding: 15px 16px;
+
+        border-bottom:
+            1px solid #f1f5f9;
+
+        color: #334155;
+
+        font-size: 13px;
+
+        vertical-align: middle;
+    }
+
+
+    tr {
+
+        transition: 0.2s;
+    }
+
+
+    tbody tr:hover {
+
+        background: #f8fafc;
+    }
+
+
+    tbody tr:last-child td {
+
+        border-bottom: none;
+    }
+
+
+    /* ===============================
+       EMPLOYEE NAME
+    =============================== */
+
+    .employee-name {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 10px;
+
+        font-weight: 600;
+
+        color: #1e293b;
+    }
+
+
+    .employee-avatar {
+
+        width: 36px;
+
+        height: 36px;
+
+        min-width: 36px;
+
+        border-radius: 10px;
+
+        background:
+            linear-gradient(
+                135deg,
+                #dbeafe,
+                #e0e7ff
+            );
+
+        display: flex;
+
+        align-items: center;
+
+        justify-content: center;
+
+        font-size: 18px;
+    }
+
+
+    /* ===============================
+       DEPARTMENT
+    =============================== */
+
+    .department-badge {
+
+        display: inline-block;
+
+        background: #f1f5f9;
+
+        color: #475569;
+
+        padding: 6px 10px;
+
+        border-radius: 7px;
+
+        font-size: 12px;
+
+        font-weight: 500;
+    }
+
+
+    /* ===============================
+       SALARY
+    =============================== */
+
+    .salary {
+
+        color: #15803d;
+
+        font-weight: 600;
+    }
+
+
+    /* ===============================
+       ACTIONS
+    =============================== */
+
+    .actions {
+
+        display: flex;
+
+        align-items: center;
+
+        gap: 7px;
+    }
+
+
+    .action-btn {
+
+        padding: 7px 10px;
+
+        border-radius: 7px;
+
+        text-decoration: none;
+
+        font-size: 12px;
+
+        font-weight: 600;
+
+        transition: 0.2s;
+    }
+
+
+    .view-btn {
+
+        background: #dcfce7;
+
+        color: #15803d;
+    }
+
+
+    .view-btn:hover {
+
+        background: #16a34a;
+
+        color: white;
+    }
+
+
+    .edit-btn {
+
+        background: #dbeafe;
+
+        color: #2563eb;
+    }
+
+
+    .edit-btn:hover {
+
+        background: #2563eb;
+
+        color: white;
+    }
+
+
+    .delete-btn {
+
+        background: #fee2e2;
+
+        color: #dc2626;
+    }
+
+
+    .delete-btn:hover {
+
+        background: #dc2626;
+
+        color: white;
+    }
+
+
+    /* ===============================
+       EMPTY
+    =============================== */
+
+    .empty {
+
+        text-align: center;
+
+        padding: 50px 20px;
+
+        color: #64748b;
+    }
+
+
+    .empty-icon {
+
+        font-size: 45px;
+
+        margin-bottom: 10px;
+    }
+
+
+    .empty h3 {
+
+        color: #334155;
+
+        margin-bottom: 5px;
+    }
+
+
+    .empty p {
+
+        font-size: 13px;
+    }
+
+
+    /* ===============================
+       MOBILE
+    =============================== */
+
+    @media (max-width: 700px) {
+
+        .employee-header {
+
+            flex-direction: column;
+
+            align-items: flex-start;
+
+            gap: 18px;
+        }
+
+
+        .add-btn {
+
+            width: 100%;
+
+            justify-content: center;
+        }
+
+
+        .header-title h1 {
+
+            font-size: 21px;
+        }
+
+    }
+
+</style>
+
+
+
+<div class="employee-page">
+
+
+    <!-- ===============================
+         HEADER
+    =============================== -->
+
+    <div class="employee-header">
+
+
+        <div class="header-title">
+
+            <div class="page-icon">
+                👥
+            </div>
+
+            <div>
+
+                <h1>
+                    Employee Management
+                </h1>
+
+                <p>
+                    View and manage all employees
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <a href="{% url 'employee_create' %}"
+           class="add-btn">
+
+            <span>
+                ➕
+            </span>
+
+            Add Employee
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- ===============================
+         TABLE
+    =============================== -->
+
+    <div class="table-card">
+
+
+        <div class="table-top">
+
+            <h2>
+                All Employees
+            </h2>
+
+            <span class="employee-count">
+
+                {{ employees|length }} Employees
+
+            </span>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            ID
+                        </th>
+
+                        <th>
+                            Employee
+                        </th>
+
+                        <th>
+                            Email
+                        </th>
+
+                        <th>
+                            Phone
+                        </th>
+
+                        <th>
+                            Department
+                        </th>
+
+                        <th>
+                            Salary
+                        </th>
+
+                        <th>
+                            Action
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+
+                    {% for employee in employees %}
+
+
+                    <tr>
+
+
+                        <!-- ID -->
+
+                        <td>
+                            #{{ employee.id }}
+                        </td>
+
+
+                        <!-- NAME -->
+
+                        <td>
+
+                            <div class="employee-name">
+
+                                <div class="employee-avatar">
+                                    👤
+                                </div>
+
+                                {{ employee.name }}
+
+                            </div>
+
+                        </td>
+
+
+                        <!-- EMAIL -->
+
+                        <td>
+                            {{ employee.email }}
+                        </td>
+
+
+                        <!-- PHONE -->
+
+                        <td>
+                            {{ employee.phone }}
+                        </td>
+
+
+                        <!-- DEPARTMENT -->
+
+                        <td>
+
+                            <span class="department-badge">
+
+                                {{ employee.department }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- SALARY -->
+
+                        <td>
+
+                            <span class="salary">
+
+                                ₹ {{ employee.salary }}
+
+                            </span>
+
+                        </td>
+
+
+                        <!-- ACTION -->
+
+                        <td>
+
+                            <div class="actions">
+
+
+                                <a
+                                    href="{% url 'employee_detail' employee.id %}"
+                                    class="action-btn view-btn">
+
+                                    View
+
+                                </a>
+
+
+                                <a
+                                    href="{% url 'employee_update' employee.id %}"
+                                    class="action-btn edit-btn">
+
+                                    Edit
+
+                                </a>
+
+
+                                <a
+                                    href="{% url 'employee_delete' employee.id %}"
+                                    class="action-btn delete-btn">
+
+                                    Delete
+
+                                </a>
+
+
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    {% empty %}
+
+
+                    <tr>
+
+                        <td colspan="7">
+
+                            <div class="empty">
+
+                                <div class="empty-icon">
+                                    👥
+                                </div>
+
+                                <h3>
+                                    No Employees Found
+                                </h3>
+
+                                <p>
+                                    Add your first employee to get started.
+                                </p>
+
+                            </div>
+
+                        </td>
+
+                    </tr>
+
+
+                    {% endfor %}
+
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+{% endblock %}
+```

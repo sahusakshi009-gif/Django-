@@ -1,0 +1,653 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {% block title %}Employee Management{% endblock %}
+    </title>
+
+
+    <style>
+
+        /* ===============================
+           RESET
+        =============================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+
+        /* ===============================
+           BODY
+        =============================== */
+
+        body {
+            font-family:
+                Arial,
+                Helvetica,
+                sans-serif;
+
+            background: #f1f5f9;
+
+            color: #1e293b;
+        }
+
+
+        /* ===============================
+           SIDEBAR
+        =============================== */
+
+        .sidebar {
+
+            position: fixed;
+
+            left: 0;
+            top: 0;
+
+            width: 250px;
+            height: 100vh;
+
+            background:
+                linear-gradient(
+                    180deg,
+                    #111827 0%,
+                    #172033 100%
+                );
+
+            color: #e5e7eb;
+
+            padding: 20px 15px;
+
+            display: flex;
+            flex-direction: column;
+
+            z-index: 1000;
+
+            box-shadow:
+                5px 0 20px
+                rgba(0, 0, 0, 0.08);
+        }
+
+
+        /* ===============================
+           LOGO
+        =============================== */
+
+        .sidebar-logo {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 10px;
+
+            margin-bottom: 30px;
+        }
+
+
+        .logo-icon {
+
+            width: 50px;
+            height: 50px;
+
+            flex-shrink: 0;
+
+            border-radius: 14px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+                );
+
+            display: flex;
+
+            align-items: center;
+            justify-content: center;
+
+            font-size: 25px;
+
+            box-shadow:
+                0 7px 18px
+                rgba(37, 99, 235, 0.30);
+        }
+
+
+        .sidebar-logo h2 {
+
+            font-size: 18px;
+
+            color: white;
+
+            font-weight: 700;
+        }
+
+
+        .sidebar-logo p {
+
+            font-size: 10px;
+
+            color: #94a3b8;
+
+            margin-top: 4px;
+        }
+
+
+        /* ===============================
+           SIDEBAR MENU
+        =============================== */
+
+        .sidebar-menu {
+
+            display: flex;
+
+            flex-direction: column;
+
+            gap: 7px;
+        }
+
+
+        .menu-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 13px 14px;
+
+            border-radius: 11px;
+
+            border-left: 3px solid transparent;
+
+            text-decoration: none;
+
+            color: #cbd5e1;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                transform 0.25s ease,
+                border-color 0.25s ease;
+        }
+
+
+        /* ===============================
+           MENU HOVER
+        =============================== */
+
+        .menu-item:hover {
+
+            background:
+                rgba(59, 130, 246, 0.10);
+
+            color: white;
+
+            border-left-color: #3b82f6;
+
+            transform: translateX(3px);
+        }
+
+
+        /* ===============================
+           ACTIVE MENU
+        =============================== */
+
+        .menu-item.active {
+
+            background:
+                linear-gradient(
+                    135deg,
+                    #2563eb,
+                    #4f46e5
+                );
+
+            color: white;
+
+            border-left-color: #93c5fd;
+
+            box-shadow:
+                0 7px 18px
+                rgba(37, 99, 235, 0.30);
+
+            transform: translateX(3px);
+        }
+
+
+        .menu-item.active .menu-icon {
+
+            transform: scale(1.08);
+        }
+
+
+        /* ===============================
+           MENU ICON
+        =============================== */
+
+        .menu-icon {
+
+            width: 25px;
+
+            min-width: 25px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+            transition:
+                transform 0.25s ease;
+        }
+
+
+        /* ===============================
+           SIDEBAR BOTTOM
+        =============================== */
+
+        .sidebar-bottom {
+
+            margin-top: auto;
+
+            padding-top: 15px;
+
+            border-top:
+                1px solid #334155;
+        }
+
+
+        /* ===============================
+           LOGOUT BUTTON
+        =============================== */
+
+        .logout-menu {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 13px;
+
+            padding: 12px 14px;
+
+            border-radius: 10px;
+
+            border: 1px solid #7f1d1d;
+
+            background:
+                rgba(127, 29, 29, 0.08);
+
+            text-decoration: none;
+
+            color: #fca5a5;
+
+            font-size: 14px;
+
+            font-weight: 500;
+
+            transition:
+                background 0.25s ease,
+                color 0.25s ease,
+                border-color 0.25s ease,
+                transform 0.25s ease,
+                box-shadow 0.25s ease;
+        }
+
+
+        /* ===============================
+           LOGOUT HOVER
+        =============================== */
+
+        .logout-menu:hover {
+
+            background: #dc2626;
+
+            border-color: #ef4444;
+
+            color: white;
+
+            transform: translateX(3px);
+
+            box-shadow:
+                0 6px 15px
+                rgba(220, 38, 38, 0.25);
+        }
+
+
+        .logout-menu .menu-icon {
+
+            color: #f87171;
+        }
+
+
+        .logout-menu:hover .menu-icon {
+
+            color: white;
+        }
+
+
+        /* ===============================
+           MAIN CONTENT
+        =============================== */
+
+        .main-content {
+
+            margin-left: 250px;
+
+            min-height: 100vh;
+
+            padding: 30px;
+
+            background:
+                #f8fafc;
+        }
+
+
+        /* ===============================
+           PAGE CONTAINER
+        =============================== */
+
+        .page-container {
+
+            max-width: 1400px;
+
+            margin: 0 auto;
+        }
+
+
+        /* ===============================
+           MOBILE - TABLET
+        =============================== */
+
+        @media (max-width: 800px) {
+
+            .sidebar {
+
+                width: 220px;
+            }
+
+
+            .main-content {
+
+                margin-left: 220px;
+
+                padding: 20px;
+            }
+
+        }
+
+
+        /* ===============================
+           MOBILE
+        =============================== */
+
+        @media (max-width: 600px) {
+
+            .sidebar {
+
+                width: 75px;
+
+                padding:
+                    15px 10px;
+            }
+
+
+            .sidebar-logo {
+
+                justify-content: center;
+
+                padding: 5px;
+
+                margin-bottom: 25px;
+            }
+
+
+            .sidebar-logo > div:last-child {
+
+                display: none;
+            }
+
+
+            .logo-icon {
+
+                width: 48px;
+                height: 48px;
+
+                font-size: 22px;
+            }
+
+
+            .sidebar-menu {
+
+                gap: 7px;
+            }
+
+
+            .menu-item {
+
+                justify-content: center;
+
+                padding: 13px 8px;
+
+                font-size: 0;
+
+                border-left: none;
+            }
+
+
+            .menu-item:hover {
+
+                transform:
+                    translateY(-2px);
+            }
+
+
+            .menu-item.active {
+
+                transform:
+                    translateY(-2px);
+            }
+
+
+            .menu-icon {
+
+                font-size: 20px;
+
+                width: auto;
+
+                min-width: auto;
+            }
+
+
+            .logout-menu {
+
+                justify-content: center;
+
+                padding: 13px 8px;
+
+                font-size: 0;
+            }
+
+
+            .logout-menu:hover {
+
+                transform:
+                    translateY(-2px);
+            }
+
+
+            .logout-menu .menu-icon {
+
+                font-size: 20px;
+            }
+
+
+            .main-content {
+
+                margin-left: 75px;
+
+                padding: 15px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- =========================================
+         SIDEBAR
+    ========================================== -->
+
+    <aside class="sidebar">
+
+
+        <!-- ===============================
+             LOGO
+        =============================== -->
+
+        <div class="sidebar-logo">
+
+            <div class="logo-icon">
+                👨‍💼
+            </div>
+
+
+            <div>
+
+                <h2>
+                    Employee
+                </h2>
+
+                <p>
+                    Management System
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- ===============================
+             NAVIGATION
+        =============================== -->
+
+        <nav class="sidebar-menu">
+
+
+            <!-- Dashboard -->
+
+            <a href="{% url 'dashboard' %}"
+               class="menu-item {% block dashboard_active %}{% endblock %}">
+
+                <span class="menu-icon">
+                    🏠
+                </span>
+
+                <span>
+                    Dashboard
+                </span>
+
+            </a>
+
+
+            <!-- Employees -->
+
+            <a href="{% url 'employee_list' %}"
+               class="menu-item {% block employee_active %}{% endblock %}">
+
+                <span class="menu-icon">
+                    👥
+                </span>
+
+                <span>
+                    Employees
+                </span>
+
+            </a>
+
+
+            <!-- Departments -->
+
+            <a href="{% url 'department_list' %}"
+               class="menu-item {% block department_active %}{% endblock %}">
+
+                <span class="menu-icon">
+                    🏢
+                </span>
+
+                <span>
+                    Departments
+                </span>
+
+            </a>
+
+
+        </nav>
+
+
+        <!-- ===============================
+             LOGOUT
+        =============================== -->
+
+        <div class="sidebar-bottom">
+
+            <a href="{% url 'logout' %}"
+               class="logout-menu">
+
+                <span class="menu-icon">
+                    🚪
+                </span>
+
+                <span>
+                    Logout
+                </span>
+
+            </a>
+
+        </div>
+
+
+    </aside>
+
+
+    <!-- =========================================
+         MAIN CONTENT
+    ========================================== -->
+
+    <main class="main-content">
+
+        <div class="page-container">
+
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+
+    </main>
+
+
+</body>
+
+</html>

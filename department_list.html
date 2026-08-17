@@ -1,0 +1,301 @@
+{% extends 'inner_base.html' %}
+
+{% block title %}
+Departments
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .page-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+    }
+
+    .page-header h1 {
+        font-size: 30px;
+        color: #1f2937;
+        margin-bottom: 6px;
+    }
+
+    .page-header p {
+        color: #6b7280;
+    }
+
+    .add-btn {
+        background: #2563eb;
+        color: white;
+        padding: 12px 20px;
+        border-radius: 8px;
+        text-decoration: none;
+        font-weight: bold;
+    }
+
+    .add-btn:hover {
+        background: #1d4ed8;
+    }
+
+    .search-box {
+        background: white;
+        padding: 18px;
+        border-radius: 10px;
+        margin-bottom: 20px;
+        box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+    }
+
+    .search-box form {
+        display: flex;
+        gap: 10px;
+    }
+
+    .search-box input {
+        flex: 1;
+        padding: 12px;
+        border: 1px solid #d1d5db;
+        border-radius: 7px;
+        font-size: 14px;
+    }
+
+    .search-btn {
+        background: #111827;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        border-radius: 7px;
+        cursor: pointer;
+    }
+
+    .department-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+    }
+
+    .department-card {
+        background: white;
+        border-radius: 12px;
+        padding: 22px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        transition: 0.25s;
+    }
+
+    .department-card:hover {
+        transform: translateY(-4px);
+    }
+
+    .department-icon {
+        width: 55px;
+        height: 55px;
+        border-radius: 12px;
+        background: #dbeafe;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 27px;
+        margin-bottom: 15px;
+    }
+
+    .department-card h2 {
+        color: #111827;
+        font-size: 21px;
+        margin-bottom: 8px;
+    }
+
+    .department-card p {
+        color: #6b7280;
+        font-size: 14px;
+        min-height: 40px;
+    }
+
+    .employee-count {
+        margin-top: 15px;
+        padding: 10px;
+        background: #f3f4f6;
+        border-radius: 7px;
+        color: #374151;
+    }
+
+    .card-actions {
+        display: flex;
+        gap: 8px;
+        margin-top: 18px;
+    }
+
+    .card-actions a {
+        flex: 1;
+        text-align: center;
+        padding: 9px;
+        border-radius: 6px;
+        text-decoration: none;
+        font-size: 13px;
+    }
+
+    .view {
+        background: #dbeafe;
+        color: #1d4ed8;
+    }
+
+    .edit {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .delete {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .empty {
+        background: white;
+        padding: 50px;
+        text-align: center;
+        border-radius: 12px;
+        color: #6b7280;
+    }
+
+    @media(max-width: 900px) {
+        .department-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media(max-width: 600px) {
+        .department-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .page-header {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 15px;
+        }
+    }
+
+</style>
+
+
+<div class="page-header">
+
+    <div>
+        <h1>Departments</h1>
+
+        <p>
+            Manage all departments
+        </p>
+    </div>
+
+    <a href="{% url 'department_create' %}"
+       class="add-btn">
+        ➕ Add Department
+    </a>
+
+</div>
+
+
+<div class="search-box">
+
+    <form method="GET">
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search department..."
+        >
+
+        <button class="search-btn">
+            🔍 Search
+        </button>
+
+    </form>
+
+</div>
+
+
+{% if departments %}
+
+<div class="department-grid">
+
+    {% for department in departments %}
+
+    <div class="department-card">
+
+        <div class="department-icon">
+            🏢
+        </div>
+
+        <h2>
+            {{ department.name }}
+        </h2>
+
+        <p>
+            {% if department.description %}
+                {{ department.description|truncatewords:15 }}
+            {% else %}
+                No description available.
+            {% endif %}
+        </p>
+
+        <div class="employee-count">
+            👥
+            <strong>
+                {{ department.employee_count }}
+            </strong>
+            Employees
+        </div>
+
+        <div class="card-actions">
+
+            <a
+                href="{% url 'department_detail' department.id %}"
+                class="view">
+                View
+            </a>
+
+            <a
+                href="{% url 'department_update' department.id %}"
+                class="edit">
+                Edit
+            </a>
+
+            <a
+                href="{% url 'department_delete' department.id %}"
+                class="delete">
+                Delete
+            </a>
+
+        </div>
+
+    </div>
+
+    {% endfor %}
+
+</div>
+
+{% else %}
+
+<div class="empty">
+
+    <h2>
+        🏢 No Departments Found
+    </h2>
+
+    <p style="margin-top:10px;">
+        Start by creating your first department.
+    </p>
+
+    <a
+        href="{% url 'department_create' %}"
+        class="add-btn"
+        style="display:inline-block;margin-top:20px;">
+        ➕ Add Department
+    </a>
+
+</div>
+
+{% endif %}
+
+{% endblock %}

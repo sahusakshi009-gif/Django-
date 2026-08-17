@@ -1,0 +1,281 @@
+{% extends 'inner_base.html' %}
+
+{% block title %}
+{{ department.name }}
+{% endblock %}
+
+{% block content %}
+
+<style>
+
+    .detail-header {
+        background: white;
+        padding: 28px;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+        margin-bottom: 25px;
+    }
+
+    .department-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .department-info {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .department-icon {
+        width: 65px;
+        height: 65px;
+        background: #dbeafe;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 32px;
+    }
+
+    .department-info h1 {
+        color: #111827;
+        margin-bottom: 6px;
+    }
+
+    .department-info p {
+        color: #6b7280;
+    }
+
+    .actions {
+        display: flex;
+        gap: 8px;
+    }
+
+    .btn {
+        padding: 10px 15px;
+        border-radius: 7px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+
+    .edit {
+        background: #dcfce7;
+        color: #15803d;
+    }
+
+    .delete {
+        background: #fee2e2;
+        color: #dc2626;
+    }
+
+    .employees-section h2 {
+        margin-bottom: 18px;
+        color: #1f2937;
+    }
+
+    .table-container {
+        background: white;
+        border-radius: 12px;
+        overflow-x: auto;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    th {
+        background: #f9fafb;
+        text-align: left;
+        padding: 15px;
+        color: #374151;
+        font-size: 14px;
+    }
+
+    td {
+        padding: 15px;
+        border-top: 1px solid #e5e7eb;
+        color: #4b5563;
+    }
+
+    .employee-name {
+        color: #2563eb;
+        font-weight: bold;
+        text-decoration: none;
+    }
+
+    .empty {
+        background: white;
+        padding: 40px;
+        text-align: center;
+        border-radius: 12px;
+        color: #6b7280;
+    }
+
+    @media(max-width: 700px) {
+
+        .department-top {
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+    }
+
+</style>
+
+
+<div class="detail-header">
+
+    <div class="department-top">
+
+        <div class="department-info">
+
+            <div class="department-icon">
+                🏢
+            </div>
+
+            <div>
+
+                <h1>
+                    {{ department.name }}
+                </h1>
+
+                <p>
+                    {% if department.description %}
+                        {{ department.description }}
+                    {% else %}
+                        No description available.
+                    {% endif %}
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div class="actions">
+
+            <a
+                href="{% url 'department_update' department.id %}"
+                class="btn edit">
+                ✏️ Edit
+            </a>
+
+            <a
+                href="{% url 'department_delete' department.id %}"
+                class="btn delete">
+                🗑 Delete
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="employees-section">
+
+    <h2>
+        👥 Employees in {{ department.name }}
+    </h2>
+
+
+    {% if employees %}
+
+    <div class="table-container">
+
+        <table>
+
+            <thead>
+
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th>Salary</th>
+                    <th>Joining Date</th>
+                </tr>
+
+            </thead>
+
+
+            <tbody>
+
+                {% for employee in employees %}
+
+                <tr>
+
+                    <td>
+                        <a
+                            href="{% url 'employee_detail' employee.id %}"
+                            class="employee-name">
+
+                            {{ employee.name }}
+
+                        </a>
+                    </td>
+
+                    <td>
+                        {{ employee.email }}
+                    </td>
+
+                    <td>
+                        {{ employee.phone|default:"-" }}
+                    </td>
+
+                    <td>
+                        ₹{{ employee.salary }}
+                    </td>
+
+                    <td>
+                        {{ employee.joining_date }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    {% else %}
+
+    <div class="empty">
+
+        <h3>
+            👥 No Employees
+        </h3>
+
+        <p style="margin-top:8px;">
+            No employees are currently assigned to this department.
+        </p>
+
+        <a
+            href="{% url 'employee_create' %}"
+            class="btn"
+            style="
+                display:inline-block;
+                margin-top:18px;
+                background:#2563eb;
+                color:white;
+            ">
+
+            ➕ Add Employee
+
+        </a>
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}
