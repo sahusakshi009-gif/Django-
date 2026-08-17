@@ -1,0 +1,240 @@
+{% extends 'base.html' %}
+
+{% block title %}Home | Employee Record Management System{% endblock %}
+
+{% block content %}
+
+<!-- Hero Section -->
+<section class="py-5 text-center" style="background:linear-gradient(135deg, rgba(146, 102, 102, 0.332), rgba(140, 102, 102, 0.332));>
+   < div class ="container-fluid bg-primary text-white py-5">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold">
+
+                Employee Record Management System
+            </h1>
+
+            <p class="lead mt-4">
+                A modern Django-based application designed to manage employee records,
+                departments, salaries, and personal information efficiently.
+            </p>
+
+            <a href="#" class="btn btn-light btn-lg mt-3 px-4">
+                Get Started
+            </a>
+        </div>
+
+        <div class="col-lg-6 text-center">
+            <img src="https://hr.economictimes.indiatimes.com/news/workplace-4-0/workplace-ikigai/why-indian-employees-need-an-office-connection/119332317" class="img-fluid rounded shadow" alt="Employees">
+        </div>
+
+    </div>
+    </div>
+</section>
+
+<!-- Features -->
+
+<section class="py-5">
+
+    <div class="container">
+
+        <h2 class="text-center fw-bold mb-5 text-primary">
+            Why Choose Our System?
+        </h2>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+
+                <div class="card h-100 text-center p-4">
+
+                    <i class="bi bi-person-badge display-4 text-primary"></i>
+
+                    <h4 class="mt-3">
+                        Employee Records
+                    </h4>
+
+                    <p>
+                        Store employee details securely with quick access and easy management.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card h-100 text-center p-4">
+
+                    <i class="bi bi-bar-chart-line display-4 text-success"></i>
+
+                    <h4 class="mt-3">
+                        Performance Tracking
+                    </h4>
+
+                    <p>
+                        Monitor employee growth, attendance, and productivity through organized records.
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="col-md-4">
+
+                <div class="card h-100 text-center p-4">
+
+                    <i class="bi bi-shield-check display-4 text-danger"></i>
+
+                    <h4 class="mt-3">
+                        Secure Database
+                    </h4>
+
+                    <p>
+                        Employee information is maintained safely with reliable data management.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- Statistics -->
+
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="row text-center">
+
+            <div class="col-md-3">
+
+                <h1 class="text-primary fw-bold">500+</h1>
+
+                <p>Employees</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h1 class="text-success fw-bold">12</h1>
+
+                <p>Departments</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h1 class="text-danger fw-bold">98%</h1>
+
+                <p>Data Accuracy</p>
+
+            </div>
+
+            <div class="col-md-3">
+
+                <h1 class="text-warning fw-bold">24×7</h1>
+
+                <p>Support</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- About Preview -->
+
+<section class="py-5">
+
+    <div class="container">
+
+        <div class="row align-items-center">
+
+            <div class="col-lg-6">
+
+                <img src="https://www.magnific.com/premium-ai-image/discussing-project-by-employees-office-march-as-employee-appreciation-day_149839154.htm" class="img-fluid rounded shadow" alt="Office">
+
+            </div>
+
+            <div class="col-lg-6">
+
+                <h2 class="fw-bold text-primary">
+                    About Our Project
+                </h2>
+
+                <p class="mt-3">
+
+                <p>A project employee is a person involved in a specific
+                    project within a company or organization. These
+                    individuals contribute their individual skills and
+                    knowledge to help ensure the project's success.
+                    Project employees are often responsible for the
+                    implementation of tasks, the achievement of
+                    objectives, and adherence to deadlines. Tasks
+                    can be diverse, ranging from technical to
+                    administrative activities. Since projects are
+                    often time-limited, project employees are
+                    frequently hired on a temporary basis.
+
+                </p>
+
+                <p>
+
+                    The system demonstrates CRUD operations, template inheritance,
+                    Bootstrap integration, and responsive web design.
+
+                </p>
+
+                <a href="/about/" class="btn btn-light mt-3">
+
+                    Read More
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- CTA -->
+
+<section class="py-5 text-center text-white" style="background:rgba(146, 102, 102, 0.332);">
+
+    <div class="container">
+
+        <h2 class="fw-bold">
+
+            Manage Your Employees Smarter
+
+        </h2>
+
+        <p class="mt-3">
+
+            Keep employee records organized, secure, and accessible from one place.
+
+        </p>
+
+        <a href="/contact/" class="btn btn-light btn-lg mt-3">
+
+            Contact Us
+
+        </a>
+
+    </div>
+
+</section>
+
+{% endblock %}
